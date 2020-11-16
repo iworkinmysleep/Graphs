@@ -71,7 +71,17 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        visited = set()
+        self.dft_helper(starting_vertex, visited)
+
+
+    def dft_helper(self, curr_vertex, visited):
+        visited.add(curr_vertex)
+        print(curr_vertex)
+        for neighbor in self.vertices[curr_vertex]:
+            if neighbor not in visited:
+                # recursive case
+                self.dft_helper(neighbor, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -124,7 +134,27 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        visited = set()
+        return self.dfs_helper([starting_vertex], visited, destination_vertex)
+
+    # return the path to destination vertex, or an empty arr
+    def dfs_helper(self, curr_path, visited, destination_vertex):
+        curr_vertex = curr_path[-1]
+        # base case if curr vertex is the destination, return the path
+        if curr_vertex == destination_vertex:
+            return curr_path
+        visited.add(curr_vertex)
+        for neighbor in self.vertices[curr_vertex]:
+            if neighbor not in visited:
+                newPath = list(curr_path)
+                newPath.append(neighbor)
+                # recursive case - keep traversing the graph and visit the neighbor next
+                res = self.dfs_helper(newPath, visited, destination_vertex)
+                if len(res) > 0:
+                    return res
+        # base case return empty arr if destination not found
+        return []
+
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
