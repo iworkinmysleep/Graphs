@@ -35,14 +35,34 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        q = Queue()
+        visited = set()
+        q.enqueue(starting_vertex)
+        while q.size() > 0:
+            curr = q.dequeue()
+            if curr not in visited:
+                visited.add(curr)
+                print(curr)
+                for neighbor in self.vertices[curr]:
+                    q.enqueue(neighbor)
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        s = Stack()
+        visited = set()
+        s.push(starting_vertex)
+        while s.size() > 0:
+            curr = s.pop()
+            if curr not in visited:
+                visited.add(curr)
+                print(curr)
+                for neighbor in self.vertices[curr]:
+                    s.push(neighbor)
+
+
 
     def dft_recursive(self, starting_vertex):
         """
@@ -59,7 +79,20 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        q = Queue()
+        visited = set()
+        q.enqueue([starting_vertex])
+        while q.size() > 0:
+            currPath = q.dequeue()
+            currNode = currPath[-1]
+            if currNode == destination_vertex:
+                return currPath
+            if currNode not in visited:
+                visited.add(currNode)
+                for neighbor in self.vertices[currNode]:
+                    newPath = list(currPath)
+                    newPath.append(neighbor)
+                    q.enqueue(newPath)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -67,7 +100,21 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        s = Stack()
+        visited = set()
+        # push the current path you're on to the stack, instead of a single vertex
+        s.push([starting_vertex])
+        while s.size() > 0:
+            currPath = s.pop()
+            currNode = currPath[-1] # the current node you're on is the last node in the path
+            if currNode == destination_vertex:
+                return currPath
+            if currNode not in visited:
+                visited.add(currNode)
+                for neighbor in self.vertices[currNode]:
+                    newPath = list(currPath) # make a copy of the current path
+                    newPath.append(neighbor)
+                    s.push(newPath)
 
     def dfs_recursive(self, starting_vertex, destination_vertex):
         """
